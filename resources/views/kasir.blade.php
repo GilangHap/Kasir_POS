@@ -12,12 +12,12 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <style>
         .menu-scroll {
-            max-height: 600px; /* Sesuaikan tinggi maksimum menu */
-            overflow-y: auto; /* Aktifkan scroll jika konten lebih tinggi dari kontainer */
+            max-height: 600px; 
+            overflow-y: auto; 
         }
         .invoice-scroll {
-            max-height: 300px; /* Sesuaikan tinggi maksimum invoice */
-            overflow-y: auto; /* Aktifkan scroll jika konten lebih tinggi dari kontainer */
+            max-height: 300px; 
+            overflow-y: auto;
         }
         .card:hover {
             transform: scale(1.02);
@@ -45,26 +45,20 @@
                         </select>
                     </div>
                 </div>
-                {{-- <div class="position-fixed bottom-0 end-0 m-4">
-                    <button class="btn btn-danger btn-lg" @click="resetTransaction">Cancel</button>
-                </div> --}}
                 <div class="row menu-scroll">
                     <template x-for="menu in filteredMenus" :key="menu.id">
                         <div class="col-6 col-lg-3 mb-4">
+                            {{-- Menu Foreach --}}
                             <div class="card h-100">
                                 <img :src="'{{ Storage::url('') }}' + menu.image" :alt="menu.name" class="card-img-top" style="height: 10rem; object-fit: cover;">
                                 <div class="card-body">
                                     <h6 class="card-title" x-text="menu.name"></h6>
                                     <p class="card-text" x-text="formatRupiah(menu.price)"></p>
-
-                                    <!-- Button when item is not in cart -->
                                     <template x-if="!isInCart(menu.id)">
                                         <div class="d-flex justify-content-between mx-2" x-show="!isInCart(menu.id)" x-transition>
                                             <button class="btn btn-primary w-100" @click="addToCart(menu.id, menu.name, menu.price)">Tambahkan</button>
                                         </div>
                                     </template>
-
-                                    <!-- Buttons when item is already in the cart -->
                                     <template x-if="isInCart(menu.id)">
                                         <div class="d-flex justify-content-between mx-2">
                                             <button class="btn btn-light" @click="removeFromCart(menu.id)">-</button>
@@ -74,15 +68,18 @@
                                     </template>
                                 </div>
                             </div>
+                            {{-- End Menu Foreach --}}
                         </div>
                     </template>
                 </div>
             </div>
+            {{-- End Bagian Kiri: Menu --}}
 
             <!-- Bagian Kanan: Receipt (Keranjang) -->
             <div class="col-md-4 bg-white p-4 rounded shadow-sm position-sticky top-0">
                 <h2 class="h4 font-weight-bold text-center mb-4">Invoice</h2>
                 <div>
+                    {{-- Table List Menu --}}
                     <div class="invoice-scroll">
                         <table class="table table-striped">
                             <thead>
@@ -107,6 +104,9 @@
                                 </template>
                             </tbody>
                         </table>
+                    {{--End Table List Menu --}}
+
+                    {{-- Total, PPN, Subtotal --}}
                     </div>
                     <div class="d-flex justify-content-between align-items-center">
                         <strong>Sub total:</strong>
@@ -136,6 +136,9 @@
                         <strong>Total:</strong>
                         <span class="h4 font-weight-bold" x-text="formatRupiah(finalTotal)"></span>
                     </div>
+                    {{-- End Total, PPN, Subtotal --}}
+
+                    {{-- Payment --}}
                     <div class="d-flex justify-content-center mt-4">
                         <button class="btn me-2" :class="paymentMethod === 'digital' ? 'btn-success' : 'btn-outline-success'" @click="togglePaymentMethod('digital')">
                             <i class="bi bi-qr-code-scan"></i><br>Bayar Qris
@@ -161,8 +164,10 @@
                     <div class="d-flex justify-content-between mt-4">
                         <button class="btn btn-primary btn-lg w-100" @click="processPayment">Bayar</button>
                     </div>
+                    {{-- End Payment --}}
                 </div>
             </div>
+            <!-- End Bagian Kanan: Receipt (Keranjang) -->
         </div>
     </div>
     @else
